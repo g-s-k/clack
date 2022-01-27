@@ -12,7 +12,7 @@ crate-type = ["rlib", "cdylib"]
 "clack-plugin" = { path = "../../../plugin" }
 "clack-extensions" = { path = "../../../extensions", features = ["audio-ports", "gui-attached", "params", "state", "clack-plugin"] }
 baseview = { git = "https://github.com/RustAudio/baseview", rev = "f6e99e9aa6f5aeb6b721cb05e4d882a51d995909" }
-vizia = { git = "https://github.com/geom3trik/VIZIA", default-features = false, features = ["baseview"] }
+iced_baseview = { git = "https://github.com/BillyDM/iced_baseview", default-features = false, features = ["glow"] }
 
 [dev-dependencies]
 clack-test-host = { path = "../../../test-host" }

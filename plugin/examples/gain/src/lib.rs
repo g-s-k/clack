@@ -15,11 +15,9 @@ use clack_plugin::{
     stream::{InputStream, OutputStream},
 };
 
-use baseview::WindowHandle;
-use clack_extensions::gui::attached::PluginGuiX11;
-use clack_extensions::gui::PluginGui;
 use std::io::Read;
 
+#[cfg(not(test))]
 mod gui;
 
 pub struct GainPlugin;
@@ -74,11 +72,15 @@ impl<'a> Plugin<'a> for GainPlugin {
     }
 
     fn declare_extensions(builder: &mut PluginExtensions<Self>, _shared: &()) {
-        builder
-            .register::<PluginParams>()
-            .register::<PluginState>()
-            .register::<PluginGui>()
-            .register::<PluginGuiX11>();
+        #[cfg(not(test))]
+        use clack_extensions::gui::attached::PluginGuiX11;
+        #[cfg(not(test))]
+        use clack_extensions::gui::PluginGui;
+
+        builder.register::<PluginParams>().register::<PluginState>();
+
+        #[cfg(not(test))]
+        builder.register::<PluginGui>().register::<PluginGuiX11>();
     }
 }
 
@@ -93,14 +95,15 @@ impl<'a> PluginParamsImpl<'a> for GainPlugin {
 
 pub struct GainPluginMainThread {
     rusting: u32,
-
-    open_window: Option<WindowHandle>,
+    #[cfg(not(test))]
+    open_window: Option<gui::GuiWindow>,
 }
 
 impl<'a> PluginMainThread<'a, ()> for GainPluginMainThread {
     fn new(_host: HostMainThreadHandle<'a>, _shared: &()) -> Result<Self, PluginError> {
         Ok(Self {
             rusting: 0,
+            #[cfg(not(test))]
             open_window: None,
         })
     }

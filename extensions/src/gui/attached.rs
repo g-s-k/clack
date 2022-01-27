@@ -96,7 +96,7 @@ pub mod implementation {
     pub trait PluginAttachedGui {
         fn attach(
             &mut self,
-            window: AttachableWindow,
+            parent: AttachableWindow,
             display_name: Option<&CStr>,
         ) -> Result<(), PluginError>;
     }
