@@ -2,6 +2,8 @@
 
 #[cfg(feature = "audio-ports")]
 pub mod audio_ports;
+#[cfg(feature = "gui")]
+pub mod gui;
 #[cfg(feature = "log")]
 pub mod log;
 #[cfg(feature = "params")]
